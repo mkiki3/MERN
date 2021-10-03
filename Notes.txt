@@ -1,0 +1,68 @@
+-Clientside
+
+-Serverside
+  server.js
+
+
+Folder Structure
+https://steve-mu.medium.com/how-i-structure-full-stack-web-application-with-react-and-nodejs-b8ec9d2bc9b4
+
+Model View Controller
+
+  Model - handles the application logic , interacts with the database. It includes all the info to represent data to the end user
+  View - represents the UI, which interacts the user.It represents the model’s data to user
+  Controller - its acts like the median between the view and model. It listens to the events triggered by view and queries model for the same
+
+  What is middleware exactly?
+  Is it a medium that handles request and responses????
+
+
+
+Database
+use store procedures instead of query calls
+query and stored procedure do the same thing but the difference is that a query should be compiled everytime 
+the query is executed,while the stored procedure is in compiled form when executed first time.I f we use
+stored procedure  we can avoid recompilation of the query.
+
+
+TO DO: Implement Folder Structure
+Routes and Controllers
+https://lo-victoria.com/build-a-rest-api-with-nodejs-routes-and-controllers
+Controller
+Login
+Register
+
+Route
+Login
+Register
+
+//create clientside and serverside
+https://javascript.plainenglish.io/understanding-package-json-33c810ea8acb
+https://nodesource.com/blog/the-basics-of-package-json-in-node-js-and-npm/
+https://dev.to/numtostr/running-react-and-node-js-in-one-shot-with-concurrently-2oac
+start them at the same time
+
+
+Mongoose Documentation
+https://mongoosejs.com/docs/schematypes.html
+
+Folder and file structure
+https://www.bezkoder.com/node-js-jwt-authentication-mysql/
+https://medium.com/codechef-vit/a-better-project-structure-with-express-and-node-js-c23abc2d736f
+Best Practices
+https://blog.logrocket.com/the-perfect-architecture-flow-for-your-next-node-js-project/
+
+npm run server
+npm run start-dev [concurrently]
+
+RESTFUL
+  GET, POST, PUT, PATCH, DELETE
+  GET - /     /id  /some  user/:id  ?id= just get info, 
+  POST - used to create things create/user/:id  and have a body
+  PUT - update a user - api/user/update/:id and put a body
+  DELETE - shouldn't have a body
+
+
+  Style
+  https://reactjs.org/docs/dom-elements.html
+
