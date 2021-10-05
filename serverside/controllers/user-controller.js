@@ -65,6 +65,7 @@ exports.loginAsyncUser = async (req, res) => {
     }
 }
 
+//I prefer this one over async
 exports.loginUser = (req, res) => {
     const errors = [];
     if (!req.body.email) {
