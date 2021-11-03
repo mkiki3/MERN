@@ -66,3 +66,71 @@ RESTFUL
   Style
   https://reactjs.org/docs/dom-elements.html
 
+
+
+//jwt
+secret_key is used to sign and verify jwt tokens, string datatype
+received "token is not defined"
+
+Headers
+https://xpertphp.com/node-js-jwt-authentication-tutorial-with-example/
+
+Sync vs Async/ Promises
+  //Promises - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+    /*
+        Javascript is synchronous 
+          example:
+            command 1
+            command 2
+            long running command 3
+            command 4
+          Old School was to use setTimeout - wait for a certain amount of time
+          
+          Newer - Callbacks - 
+          function(someCommand, a callback function){
+              wait for someCommand to finish, then call the callback function
+          }
+
+          Newest Promise
+            new Promise((resolve, reject) => {
+                some long running function
+                resolve(results)
+
+                or 
+                reject(errors)
+            })
+
+
+            Way One:
+                set up function to be async
+                async function someFunc (params){
+                    const variable = await long running function(); //waits for the function to complete
+                    use variable from long running function
+                }
+
+            Way Two:
+                function someFunc (params){
+                    long running function()
+                    .then( function(results from long running function as the params) {
+
+                    })
+                    .catch( function(errors from the long running function as params){
+                        
+                    })
+                }
+
+                function someFunc(params){
+                    long running function()
+                    .then(results => {
+
+                    })
+                    .catch(errors => {
+
+                    })
+                }
+
+    */
+
+
+    //Mongo Db Colletions
+    //Create roles

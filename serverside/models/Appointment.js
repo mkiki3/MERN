@@ -2,21 +2,25 @@ const {Schema, model} = require('mongoose');
 
 const appointmentsSchema = new Schema(
 	{
-		appointmentType: {
+		userId: {
+            type: Number,
+			required: false
+        },
+        appointmentType: {
 			type: String,
-			required: true
+			required: false
 		},
         cost: {
             type: Number,
-            required: true
+            required: false
         },
         time: {
-            type: Number,
-            required: true
+            type: String,
+            required: false
         },
-        Date: {
+        date: {
             type: Date,
-            required: true
+            required: false
         }
     }
 );

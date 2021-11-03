@@ -1,0 +1,23 @@
+[
+    {"id" : 1,
+     "type" : "Braiding"
+    },
+    {"id" : 2,
+     "type" : "Haircut"
+    },
+    {"id" : 3,
+     "type" : "Shampoo"
+    },
+    {"id" : 4,
+     "type" : "Diva Cut"
+    },
+    {"id" : 5,
+     "type" : "Hair Dye"
+    },
+    {"id" : 6,
+     "type" : "Locks"
+    },
+    {"id" : 7,
+     "type" : "Silk Press"
+    }
+ ]

@@ -1,3 +1,4 @@
 const User = require('./User');
 const Appointment = require('./Appointment')
-module.exports = {User,Appointment};
+const Role = require('./Role')
+module.exports = {User,Appointment,Role};

@@ -1,3 +1,5 @@
-/node_modules
+node_modules
 .txt
-.env
+serverside/.env
+serverside/node_modules
+clientside/node_modules

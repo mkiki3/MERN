@@ -11,7 +11,20 @@ exports.getAppointment = (req, res) => {
         })
 }
 
+exports.getAllAppointments = (req, res) => {
+    Appointment.find({})
+        .then(appointment => {
+            console.log(appointment)
+            res.status(200).send(appointment);
+        })
+        .catch(err =>{
+            console.log(err);
+            res.status(500).send(err.message);
+        })
+}
+
 exports.createAppointment = (req, res) => {
+    //req.body =
     Appointment.create(req.body)
         .then(appointment => {
             res.status(200).send(appointment);
@@ -36,15 +49,12 @@ exports.cancelAppointment = (req, res) => {
 
 exports.updateAppointment = (req, res) => {
     Appointment.findOneAndUpdate({_id: req.params.id},{
-        appointmentType: req.body.type
+        appointmentType: 'test3'
     }, {new: true}).then(appointment => {
             res.status(200).send(appointment);
         })
         .catch(err =>{
             console.log(err);
             res.status(500).send(err.message);
-        })
-    //Appointment.updateOne({appointmentType: req.params.type}) //use another field 
-        //update field here
-        
+        })        
 }

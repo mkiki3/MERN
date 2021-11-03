@@ -1,16 +1,19 @@
 const router = require('express').Router();
-const {getUser, createUser, deleteUser, loginUser, loginAsyncUser} = require('../../controllers/user-controller');
+const {getUser, getAllUsers, createUser, deleteUser, loginUser} = require('../../controllers/user-controller');
+const authJwt =  require('../../middleware/authJwt')
 
-router.post('/loginAsync',loginAsyncUser);
+router.use(function(req, res, next) {
+    res.header(
+        "Access-Control-Allow-Headers",
+        "x-access-token, Origin, Content-Type, Accept"
+    );
+    console.log('test')
+    next();
+});
+
 router.post('/login', loginUser);
-router.get('/:email', getUser);
-router.post('/', createUser);
+router.get('/getUser', [authJwt.verifyToken] ,getUser); 
+router.get('/getAllUsers', [authJwt.verifyToken] ,getUser); 
+router.post('/signup', createUser);
 router.delete('/:id',deleteUser)
 module.exports = router;
-
-//getUser
-//http://localhost:3001/api/user/kiki@aol.com
-
-//http://localhost:3001/api/user/loginAsync
-//use body
-//response: data and hash arguments required

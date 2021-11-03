@@ -1,5 +1,7 @@
 const {Schema, model} = require('mongoose');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv').config()
+const jwt = require('jsonwebtoken')
 
 /*
     Sample Encryption
@@ -28,10 +30,25 @@ const userSchema = new Schema(
 		fullname: {
             type: String,
             required: true
-        },
-
+        }
     }
 );
+
+
+//generate token method
+//involves using a header. how do I do that?
+
+ userSchema.methods.generateToken = function (user, cb) {
+  var user = this;	
+  console.log(user)
+  const token = jwt.sign({ id: user._id }, process.env.SECRET_KEY);
+console.log(token)
+  user.jwtToken = token;
+
+  user.save().then((user)=>{cb(null,user)}).catch((err)=>cb(err))
+
+};
+
 
 //mongoose pre - middleware for https://mongoosejs.com/docs/middleware.html#pre
 userSchema.pre('save', function (next) {

@@ -1,24 +1,42 @@
 const {User} = require('../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv').config()
 
 exports.getUser = (req, res) => {
-    User.find({email: req.params.email})
-        .then(user => {
-            res.status(200).send(user);
-        })
-        .catch(err =>{
-            console.log(err);
-            res.status(500).send(err.message);
-        })
+    let userId =  req.id
+    User.find({_id: userId})
+    .then(user => {
+        console.log(user)
+        res.status(200).send(user);
+    })
+    .catch(err =>{
+        console.log(err);
+        res.status(500).send(err.message);
+    })
+}
+
+exports.getAllUsers = (req, res) => {
+    User.find({})
+    .then(user => {
+        console.log(user)
+        res.status(200).send(user);
+    })
+    .catch(err =>{
+        console.log(err);
+        res.status(500).send(err.message);
+    })
 }
 
 exports.createUser = (req, res) => {
     //normally you would do some type of error checking
-
     //const newUser = await User.create({email: req.body.email, password: req.body.password});
-
     //there are validation libraries such as https://www.npmjs.com/package/joi
     const errors = [];
+    /*if(doesUserExist){
+        errors.push('Email Already exist');
+    }*/
+   
     if (!req.body.email) {
 		errors.push('Missing Email Address');
 	}
@@ -32,7 +50,7 @@ exports.createUser = (req, res) => {
 		return; //return here so the function does not continue
 	}
 
-    User.create(req.body)
+   const user = User.create(req.body)
         .then(newUser => {
             res.status(200).send(newUser);
         })
@@ -40,9 +58,11 @@ exports.createUser = (req, res) => {
             console.log(err);
             res.status(500).send(err.message);
         })
+
 }
 
 exports.loginAsyncUser = async (req, res) => {
+    console.log(req.body);
     try{
         const foundUser = await User.findOne({email: req.body.email});
 
@@ -65,7 +85,6 @@ exports.loginAsyncUser = async (req, res) => {
     }
 }
 
-//I prefer this one over async
 exports.loginUser = (req, res) => {
     const errors = [];
     if (!req.body.email) {
@@ -83,59 +102,7 @@ exports.loginUser = (req, res) => {
     //const email = req.body.email;
     //https://mongoosejs.com/docs/api.html#model_Model.findOne
     //Promises - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
-    /*
-        Javascript is synchronous 
-          example:
-            command 1
-            command 2
-            long running command 3
-            command 4
-          Old School was to use setTimeout - wait for a certain amount of time
-          
-          Newer - Callbacks - 
-          function(someCommand, a callback function){
-              wait for someCommand to finish, then call the callback function
-          }
 
-          Newest Promise
-            new Promise((resolve, reject) => {
-                some long running function
-                resolve(results)
-
-                or 
-                reject(errors)
-            })
-
-
-            Way One:
-                set up function to be async
-                async function someFunc (params){
-                    const variable = await long running function(); //waits for the function to complete
-                    use variable from long running function
-                }
-
-            Way Two:
-                function someFunc (params){
-                    long running function()
-                    .then( function(results from long running function as the params) {
-
-                    })
-                    .catch( function(errors from the long running function as params){
-                        
-                    })
-                }
-
-                function someFunc(params){
-                    long running function()
-                    .then(results => {
-
-                    })
-                    .catch(errors => {
-
-                    })
-                }
-
-    */
     User.findOne({email: req.body.email})
     .then(foundUser => {
         if (!foundUser){
@@ -149,7 +116,15 @@ exports.loginUser = (req, res) => {
         }
 
         foundUser.password = '';
-        res.status(200).send({user: foundUser, message: 'User logged in successfully'});
+        let token = jwt.sign({ id: foundUser._id }, process.env.SECRET_KEY, {expiresIn: '45m'});
+       // foundUser.jwtToken = token
+
+        res.status(200).send({
+        userId: foundUser._id,
+        email: foundUser.email,
+        fullname: foundUser.fullname,
+        token: token,
+        message: 'User logged in successfully'});
     })
     .catch(err => {
         console.log(err);
@@ -169,6 +144,20 @@ exports.deleteUser = (req, res) => {
         })
 }
 
+const doesUserExist = () => {
+    console.log('doesUserExist')
+    User.findOne({email: req.body.email})
+    .then(foundUser => {
+        if(!foundUser){
+            return true
+        }
+        return false
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).send(err.message);
+    })
+}
 //https://www.bezkoder.com/node-js-mongodb-auth-jwt/
 //https://jasonwatmore.com/post/2017/12/07/react-redux-jwt-authentication-tutorial-example
 //https://jasonwatmore.com/post/2019/04/06/react-jwt-authentication-tutorial-example
