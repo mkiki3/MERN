@@ -6,7 +6,7 @@ const secret = process.env.SECRET_KEY
 
 //verify Token
 //call next to proceed to the next step
-
+//
 verifyToken = (req, res, next) => {
 	let token = req.headers["x-access-token"];
 	console.log('Verify token ' + token)
